@@ -1248,8 +1248,26 @@ ${mutationOptionsFn}
      
       return ${operationPrefix}Mutation(${mutationOptionsVarName});
     }
-    `;
+    
+    ${
+      query.usePrefetch
+        ? `${doc}export const ${camel(
+            `prefetch-${operationName}`,
+          )} = async <TData = Awaited<ReturnType<${dataType}>>, TError = ${errorType}>(queryClient: QueryClient, ${mutationArguments}): Promise<QueryClient> => {
 
+      const ${mutationOptionsVarName} = ${mutationOptionsFnName}(${
+            isRequestOptions ? 'options' : 'mutationOptions'
+          });
+     
+
+  await queryClient.${camel(`prefetch-query`)}(${mutationOptionsVarName});
+
+  return queryClient;
+}\n`
+        : ''
+    }
+`;
+    console.log('implementation', implementation);
     mutators = mutationOptionsMutator
       ? [...(mutators ?? []), mutationOptionsMutator]
       : mutators;
