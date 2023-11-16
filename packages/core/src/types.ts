@@ -107,6 +107,7 @@ export type NormalizedOverrideOutput = {
   ) => string;
   requestOptions: Record<string, any> | boolean;
   useDates?: boolean;
+  coerceTypes?: boolean;
   useTypeOverInterfaces?: boolean;
   useDeprecatedOperations?: boolean;
   useBigInt?: boolean;
@@ -316,6 +317,7 @@ export type NormalizedQueryOptions = {
   useInfinite?: boolean;
   useSuspenseInfiniteQuery?: boolean;
   useInfiniteQueryParam?: string;
+  usePrefetch?: boolean;
   options?: any;
   queryKey?: NormalizedMutator;
   queryOptions?: NormalizedMutator;
@@ -331,6 +333,7 @@ export type QueryOptions = {
   useInfinite?: boolean;
   useSuspenseInfiniteQuery?: boolean;
   useInfiniteQueryParam?: string;
+  usePrefetch?: boolean;
   options?: any;
   queryKey?: Mutator;
   queryOptions?: Mutator;

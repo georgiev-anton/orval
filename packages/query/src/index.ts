@@ -154,6 +154,7 @@ const REACT_QUERY_DEPENDENCIES_V3: GeneratorDependency[] = [
       { name: 'UseQueryResult' },
       { name: 'UseInfiniteQueryResult' },
       { name: 'QueryKey' },
+      { name: 'QueryClient' },
     ],
     dependency: 'react-query',
   },
@@ -178,6 +179,7 @@ const REACT_QUERY_DEPENDENCIES: GeneratorDependency[] = [
       { name: 'UseInfiniteQueryResult' },
       { name: 'UseSuspenseInfiniteQueryResult' },
       { name: 'QueryKey' },
+      { name: 'QueryClient' },
       { name: 'InfiniteData' },
     ],
     dependency: '@tanstack/react-query',
@@ -401,10 +403,11 @@ const generateQueryRequestFunction = (
       isExactOptionalPropertyTypes,
     });
 
+    let bodyDefinition = body.definition.replace('[]', '\\[\\]');
     let propsImplementation =
       mutator?.bodyTypeName && body.definition
         ? toObjectString(props, 'implementation').replace(
-            new RegExp(`(\\w*):\\s?${body.definition}`),
+            new RegExp(`(\\w*):\\s?${bodyDefinition}`),
             `$1: ${mutator.bodyTypeName}<${body.definition}>`,
           )
         : toObjectString(props, 'implementation');
@@ -803,6 +806,7 @@ const generateQueryImplementation = ({
   hasSvelteQueryV4,
   hasQueryV5,
   doc,
+  usePrefetch,
 }: {
   queryOption: {
     name: string;
@@ -830,6 +834,7 @@ const generateQueryImplementation = ({
   hasSvelteQueryV4: boolean;
   hasQueryV5: boolean;
   doc?: string;
+  usePrefetch?: boolean;
 }) => {
   const queryProps = toObjectString(props, 'implementation');
 
@@ -1031,7 +1036,24 @@ ${doc}export const ${camel(
   };
 
   return query;
-}\n`;
+}\n
+${
+  usePrefetch
+    ? `${doc}export const ${camel(
+        `prefetch-${name}`,
+      )} = async <TData = Awaited<ReturnType<${dataType}>>, TError = ${errorType}>(\n queryClient: QueryClient, ${queryProps} ${queryArguments}\n  ): Promise<QueryClient> => {
+
+  const ${queryOptionsVarName} = ${queryOptionsFnName}(${queryProperties}${
+        queryProperties ? ',' : ''
+      }${isRequestOptions ? 'options' : 'queryOptions'})
+
+  await queryClient.${camel(`prefetch-${type}`)}(${queryOptionsVarName});
+
+  return queryClient;
+}\n`
+    : ''
+}
+`;
 };
 
 const generateQueryHook = async (
@@ -1218,6 +1240,7 @@ const generateQueryHook = async (
           hasSvelteQueryV4,
           hasQueryV5,
           doc,
+          usePrefetch: query.usePrefetch,
         }),
       '',
     )}

@@ -20,7 +20,7 @@
 
 ### Samples
 
-You can find below some samples
+You can find below some samples:
 
 - [react app](https://github.com/anymaniax/orval/tree/master/samples/react-app)
 - [react query](https://github.com/anymaniax/orval/tree/master/samples/react-query)
@@ -30,7 +30,22 @@ You can find below some samples
 - [nx fastify react](https://github.com/anymaniax/orval/tree/master/samples/nx-fastify-react)
 - [angular app](https://github.com/anymaniax/orval/tree/master/samples/angular-app)
 
+### Playground
+
+Try Orval out for yourself using our [Playgound](https://orval.dev/playground) application!
+
+## Star History
+
+<a href="https://star-history.com/#anymaniax/orval&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=anymaniax/orval&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=anymaniax/orval&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=anymaniax/orval&type=Date" />
+  </picture>
+</a>
+
 ### All Thanks To Our Contributors:
+
 <a href="https://github.com/anymaniax/orval/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=anymaniax/orval" />
 </a>
